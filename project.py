@@ -2,21 +2,32 @@ import numpy as np
 import scipy.sparse as sp
 import scipy.sparse.linalg as spla
 
-def eigen_decomposition(points = 40, size = 6.0, V_0 = -50.0, sigma = 1.0):
+def eigen_decomposition(points=40, size=6.0, V_0=-50.0, sigma=1.0):
     """
     Solves the 2-body nuclear Schrodinger equation using the Finite Difference Method.
     Please make yourrself aware of the many body Schrodinger equation.
-
-    Parameters:
-    -----------
-    points : int (N)
+    
+    Parameters
+    ----------
+    points : int
         Number of spatial grid points for each particle's coordinate.
-    size : float (L)
+    size : float
         The size of the nuclear well boundary [-L/2, L/2] in femtometers (fm).
     V_0 : float
         Strength of the short-range nucleon-nucleon interaction (MeV).
     sigma : float
         Range of the nuclear interaction (fm).
+
+    Returns
+    -------
+    eigenvalues : ndarray
+        The lowest 3 energy eigenvalues (MeV) of the many-body system.
+    eigenvectors : ndarray
+        The corresponding spatial wavefunctions (eigenvectors).
+    x : ndarray
+        The 1D coordinate grid vector used for the spatial discretization.
+    V_2D : ndarray
+        The 2D interaction potential matrix evaluated across the spatial grid.
     """
     N = points
     L = size
