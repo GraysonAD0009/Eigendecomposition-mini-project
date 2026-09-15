@@ -4,11 +4,17 @@ Nuclear Physics Many-Body Problem Solver.
 This module provides functions to solve the 2-body nuclear Schrödinger equation
 using the Finite Difference Method (FDM) and exact eigen decomposition.
 """
+from typing import Tuple
 import numpy as np
-import scipy.sparse as sp
-import scipy.sparse.linalg as spla
+import scipy.sparse as sp # type: ignore[import-untyped]
+import scipy.sparse.linalg as spla # type: ignore[import-untyped]
 
-def eigen_decomposition(points=40, size=6.0, V_0=-50.0, sigma=1.0):
+def eigen_decomposition(
+    points: int=40,
+    size: float=6.0,
+    V_0: float=-50.0, 
+    sigma: float=1.0
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Solves the 2-body nuclear Schrodinger equation using the Finite Difference Method.
     Please make yourrself aware of the many body Schrodinger equation.
