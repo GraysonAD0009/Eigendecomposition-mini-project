@@ -71,3 +71,9 @@ def eigen_decomposition(points = 40, size = 6.0, V_0 = -50.0, sigma = 1.0):
     eigenvalues, eigenvectors = spla.eigsh(Ham, k=3)
     
     return eigenvalues, eigenvectors, x, V_2D
+
+def main():
+    eigenvalues, eigenvectors, x, V_2D = eigen_decomposition()
+
+if __name__ == "__main__":
+    main()
