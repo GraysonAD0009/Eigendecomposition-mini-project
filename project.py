@@ -1,3 +1,9 @@
+"""
+Nuclear Physics Many-Body Problem Solver.
+
+This module provides functions to solve the 2-body nuclear Schrödinger equation
+using the Finite Difference Method (FDM) and exact eigen decomposition.
+"""
 import numpy as np
 import scipy.sparse as sp
 import scipy.sparse.linalg as spla
@@ -84,6 +90,13 @@ def eigen_decomposition(points=40, size=6.0, V_0=-50.0, sigma=1.0):
     return eigenvalues, eigenvectors, x, V_2D
 
 def main():
+    """
+    Execute the core 2-body eigen decomposition and print results.
+    
+    This function serves as the primary entry point for the module script
+    execution, processing default values and showing successfully resolved energies.
+    """
+    # Execute decomposition
     eigenvalues, eigenvectors, x, V_2D = eigen_decomposition()
 
 if __name__ == "__main__":
