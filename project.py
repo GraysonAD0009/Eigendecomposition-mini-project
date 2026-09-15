@@ -6,19 +6,20 @@ using the Finite Difference Method (FDM) and exact eigen decomposition.
 """
 from typing import Tuple
 import numpy as np
-import scipy.sparse as sp # type: ignore[import-untyped]
-import scipy.sparse.linalg as spla # type: ignore[import-untyped]
+import scipy.sparse as sp  # type: ignore[import-untyped]
+import scipy.sparse.linalg as spla  # type: ignore[import-untyped]
+
 
 def eigen_decomposition(
-    points: int=40,
-    size: float=6.0,
-    V_0: float=-50.0, 
-    sigma: float=1.0
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    points: int = 40,
+    size: float = 6.0,
+    V_0: float = -50.0, 
+    sigma: float = 1.0
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Solves the 2-body nuclear Schrodinger equation using the Finite Difference Method.
     Please make yourrself aware of the many body Schrodinger equation.
-    
+
     Parameters
     ----------
     points : int
@@ -43,14 +44,14 @@ def eigen_decomposition(
     """
     N = points
     L = size
-    
+
     # Establish the coordinate grid
     # Higher numerical accuracy will be determined, but matrice size will increase.
     x = np.linspace(-L/2, L/2, N)
     dx = x[1] - x[0]
     # Nucleon Constant
     hbar = 41.47
-    
+
     # Builds the 1 Dimensional Single-Particle Kinetic Energy Matrix
     # Kinetic energy equation for quantum mechanics specifically is required for this
     # Use the 3-point central finite difference (learned this Monday, kind of)
@@ -70,40 +71,42 @@ def eigen_decomposition(
     # sp.kron(T_1D, Id_mt) multiplies kinetic energy and the Id_mt for particle one
     # sp.kron(Id_mt, T_1D) multiplies kinetic energy and the Id_mt for particle two
     T_mb = -0.5 * hbar * (sp.kron(T_1D, Id_mt) + sp.kron(Id_mt, T_1D))
-    
+
     # 2 body potential matrice
     # ij indexing is for purely matrix and tensor indexing
     X1, X2 = np.meshgrid(x, x, indexing='ij')
-    
+
     # Gaussian potential for short distance nuclear force
     distance = np.abs(X1 - X2)
     # Poteential Energy
     V_2D = V_0 * np.exp(-(distance**2) / (2 * sigma**2))
-    
+
     # Turn the 2D matrix into a 1D vector
     V_flat = V_2D.flatten()
     # Place that 1D vector on the main diagonal of the sparse
     V_mb = sp.diags(V_flat, 0, format='csr')
-    
+
     # Sum of the Many Body Hamiltonian
     Ham = T_mb + V_mb
-    
+
     # Eigen Decomposition
     # Matrices will be large so we use sparse
     # Sparse Linear Algebra, Hermitian
     eigenvalues, eigenvectors = spla.eigsh(Ham, k=3)
-    
+
     return eigenvalues, eigenvectors, x, V_2D
 
-def main():
+
+def main() -> :
     """
     Execute the core 2-body eigen decomposition and print results.
-    
+
     This function serves as the primary entry point for the module script
     execution, processing default values and showing successfully resolved energies.
     """
     # Execute decomposition
     eigenvalues, eigenvectors, x, V_2D = eigen_decomposition()
+
 
 if __name__ == "__main__":
     main()
