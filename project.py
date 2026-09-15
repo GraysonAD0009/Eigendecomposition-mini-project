@@ -13,7 +13,7 @@ import scipy.sparse.linalg as spla  # type: ignore[import-untyped]
 def eigen_decomposition(
     points: int = 40,
     size: float = 6.0,
-    V_0: float = -50.0, 
+    V_0: float = -50.0,
     sigma: float = 1.0
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
