@@ -97,7 +97,7 @@ def eigen_decomposition(
     return eigenvalues, eigenvectors, x, V_2D
 
 
-def main() -> :
+def main() -> None:
     """
     Execute the core 2-body eigen decomposition and print results.
 
