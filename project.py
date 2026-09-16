@@ -91,7 +91,7 @@ def eigen_decomposition(
 
     # Eigen Decomposition
     # Matrices will be large so we use sparse
-    # Sparse Linear Algebra, Hermitian
+    # Sparse Linear Algebra, Hermitian (symmetry), at the 3 lowest eigenvalues
     eigenvalues, eigenvectors = spla.eigsh(Ham, k=3)
 
     return eigenvalues, eigenvectors, x, V_2D
